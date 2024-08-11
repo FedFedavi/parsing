@@ -1,20 +1,16 @@
 import requests
 import pprint
 
+param = {
+    "q" : "html"
+}
 
-response = requests.get("https://api.github.com")
-#
-# print(response.status_code)
-#
-#
-# if response.ok:
-#     print("Запрос успешно выполнен")
-# else:
-#     print("Произошла ошибка")
+response = requests.get("https://api.github.com/search/repositories", params=param)
 
-print(response.text)
 
 response_json = response.json()
 
-pprint.pprint(response_json)
+print(response.status_code)
+pprint.pprint(response_json["total_count"])
 
+pprint.pprint(response_json)
