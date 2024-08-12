@@ -1,16 +1,18 @@
+from bs4 import BeautifulSoup
 import requests
-import pprint
 
-param = {
-    "q" : "html"
-}
+url = "http://quotes.toscrape.com/"
+responce = requests.get(url)
+html = responce.text
 
-response = requests.get("https://api.github.com/search/repositories", params=param)
+soup = BeautifulSoup(html, "html.parser")
 
+text = soup.find_all("span", class_="text")
+print(text)
+author = soup.find_all("small", class_="author")
+print(author)
 
-response_json = response.json()
-
-print(response.status_code)
-pprint.pprint(response_json["total_count"])
-
-pprint.pprint(response_json)
+for i in range(len(text)):
+    print(f"Цитата № - {i+1}")
+    print(text[i].text)
+    print(f"Автор цитаты - {author[i].text}\n")
